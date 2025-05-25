@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'login_screen.dart'; // Importiere die Login-Seite für den Redirect
+import 'package:provider/provider.dart';
+import 'package:sfip_tasks/app_drawer.dart';
+import 'package:sfip_tasks/screens/finance_screen.dart';
+import 'package:sfip_tasks/screens/sport_screen.dart';
+import 'package:sfip_tasks/screens/todo_screen.dart';
+import 'package:sfip_tasks/statemanagement/theme_provider.dart';
+
+
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -12,28 +18,62 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Future<void> _logout() async {
-    await FirebaseAuth.instance.signOut(); // Benutzer abmelden
-
-    if (!mounted) return;
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const LoginScreen()), // Zur Login-Seite navigieren
-    );
+  void _navigateTo(BuildContext context, Widget screen) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => screen));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: _logout,
-          style: ElevatedButton.styleFrom(
-            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
-            textStyle: const TextStyle(fontSize: 18),
-          ),
-          child: const Text('Logout'),
+// Obtain the themeProvider from context (make sure you have set up Provider in your app)
+
+final themeProvider = Provider.of<ThemeProvider>(context);
+
+return Scaffold(
+  appBar: AppBar(
+    title: Text(widget.title),
+    backgroundColor: Colors.teal,
+    actions: [
+      IconButton(
+        icon: Icon(themeProvider.isDarkMode ? Icons.dark_mode : Icons.light_mode),
+        onPressed: () {
+          themeProvider.toggleDarkMode();
+        },
+      ),
+    ],
+  ),
+  drawer: const AppDrawer(),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: GridView.count(
+          crossAxisCount: 2, // 2 Spalten für ein modernes Grid-Layout
+          crossAxisSpacing: 16,
+          mainAxisSpacing: 16,
+          children: [
+            _buildDashboardCard(Icons.checklist, 'To-Do App', () => _navigateTo(context, TodoScreen())),
+            _buildDashboardCard(Icons.attach_money, 'Finanz-App', () => _navigateTo(context, FinanceScreen())),
+            _buildDashboardCard(Icons.sports_soccer, 'Sport-App', () => _navigateTo(context, SportScreen())),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDashboardCard(IconData icon, String title, VoidCallback onTap) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 4, offset: Offset(2, 2))],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 40, color: Colors.teal),
+            const SizedBox(height: 8),
+            Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          ],
         ),
       ),
     );
