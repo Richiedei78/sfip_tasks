@@ -1,0 +1,18 @@
+{
+  "rules_version": "2",
+  "service": "cloud.firestore",
+  "rules": {
+    "databases": {
+      "$database": {
+        "documents": {
+          "users": {
+            "$userId": {
+              ".read": "auth != null",
+              ".write": "auth != null"
+            }
+          }
+        }
+      }
+    }
+  }
+}
