@@ -38,7 +38,7 @@ class _MyAppState extends State<MyApp> {
 
   void _startAutoLogout() {
     _logoutTimer?.cancel(); // 🔥 Löscht bestehenden Timer
-    _logoutTimer = Timer(const Duration(minutes: 10), () async {
+    _logoutTimer = Timer(const Duration(minutes: 5), () async {
       await _auth.signOut();
       if (!mounted) return;
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => const LoginScreen()));
@@ -65,7 +65,9 @@ class _MyAppState extends State<MyApp> {
         title: 'SFIP',
         debugShowCheckedModeBanner: false,
         theme: themeProvider.isDarkMode ? ThemeData.dark() : ThemeData.light(),
-        home: _handleUserNavigation(), // 🔥 Login-Prüfung
+        home: Builder(builder: (context) {
+          return _handleUserNavigation();
+        }),
       ),
     );
   }
