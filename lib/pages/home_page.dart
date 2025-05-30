@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sfip_tasks/app_drawer.dart';
-import 'package:sfip_tasks/screens/finance_screen.dart';
-import 'package:sfip_tasks/screens/sport_screen.dart';
-import 'package:sfip_tasks/screens/todo_screen.dart';
+import 'package:sfip_tasks/pages/finance_screen.dart';
+import 'package:sfip_tasks/pages/sport_screen.dart';
+import 'package:sfip_tasks/pages/todo_screen.dart';
 import 'package:sfip_tasks/statemanagement/theme_provider.dart';
 
 
@@ -49,9 +49,11 @@ return Scaffold(
           crossAxisSpacing: 16,
           mainAxisSpacing: 16,
           children: [
-            _buildDashboardCard(Icons.checklist, 'To-Do App', () => _navigateTo(context, TodoScreen())),
-            _buildDashboardCard(Icons.attach_money, 'Finanz-App', () => _navigateTo(context, FinanceScreen())),
-            _buildDashboardCard(Icons.sports_soccer, 'Sport-App', () => _navigateTo(context, SportScreen())),
+            _buildDashboardCard(Icons.checklist, 'To-Do´s', () => _navigateTo(context, TodoScreen())),
+            _buildDashboardCard(Icons.attach_money, 'Finanzen', () => _navigateTo(context, FinanceScreen())),
+            _buildDashboardCard(Icons.sports_soccer, 'Sports', () => _navigateTo(context, SportScreen())),
+            _buildDashboardCard(Icons.checklist, 'Versicherungen', () => _navigateTo(context, TodoScreen())),
+            
           ],
         ),
       ),

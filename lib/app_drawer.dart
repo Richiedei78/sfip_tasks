@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sfip_tasks/screens/login_screen.dart';
 import 'package:sfip_tasks/screens/settings_screen.dart';
-import 'home_page.dart';
+import 'pages/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -77,7 +77,7 @@ class AppDrawer extends StatelessWidget {
                 ListTile(
                   leading: const Icon(Icons.settings),
                   title: const Text('Einstellungen'),
-                  onTap: () { Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const SettingsScreen(title: 'Einstellungen')));},
+                  onTap: () { Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const SettingsScreen()));},
                 ),
               ],
             ),
