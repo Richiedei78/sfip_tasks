@@ -1,4 +1,4 @@
-package com.example.sfip_tasks2
+package com.example.sfip_tasks
 
 import io.flutter.embedding.android.FlutterActivity
 
